@@ -4,4 +4,4 @@ khs-logger
 Javascript logging framework with support for remote logging and visual debugging support
 
 
-![My image](inthekeyhole.github.com/khs-logger/screen.png)
+![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
