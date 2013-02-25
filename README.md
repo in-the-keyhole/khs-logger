@@ -11,7 +11,7 @@ Download latest release here [https://github.com/in-the-keyhole/khs-logger/archi
      // Load using <script>...<script> 
      <script>lib/khs-logger.js</script>
      
-     // or as require AMD module
+     // or as require.js AMD module
      paths : {
 		'underscore' : 'libs/underscore/underscore-loader',
 		'backbone' : 'libs/backbone/backbone-loader',
