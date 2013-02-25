@@ -39,6 +39,16 @@ Visual Logging
 --------------
 Visual Logging, really helpful trying to determine view component boundaries, here's how to apply.
 
-Component <div> are outlined and information displayed as you mouse over them, see example screen shot below.
+     // backbone.js view render method 
+     ...
+     render : function(eventName) {
+			var compiled_template = _.template(Template);
+			var $el = $(this.el);
+			$el.html(compiled_template(this.model.toJSON()));
+			**$.Log.mark($el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());**	
+			return this;
+	 }, ..
+
+Mousing over div's outlines and displays information, see screen shot below.
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
