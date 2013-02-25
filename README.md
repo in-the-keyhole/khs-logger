@@ -8,7 +8,7 @@ Geting Started
 
 Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.1.zip] unzip in java script folder
 
-Load using <script>...<script> 
+Load using srcript tags, jQuery is the only required dependency
 
      <script>lib/khs-logger.js</script>
      
