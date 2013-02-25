@@ -1,7 +1,25 @@
-khs-logger
-==========
+khs-logger.js
+=============
 
 Java script logging framework with support for remote logging and view component logging.
+
+Geting Started
+--------------
+
+Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.1.zip] unzip in java script folder
+
+     // Load using <script>...<script> 
+     <script>lib/khs-logger.js</script>
+     
+     // or as require AMD module
+     paths : {
+		'underscore' : 'libs/underscore/underscore-loader',
+		'backbone' : 'libs/backbone/backbone-loader',
+		'text' : 'libs/require/require-text-2.0.0',
+		'jquery' : 'libs/jquery-1.7.2',
+		'log' : 'libs/khs.logger'
+     },
+     
 
 Logging
 -------
