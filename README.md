@@ -1,7 +1,7 @@
 khs-logger
 ==========
 
-Java script logging framework with support for remote logging and visual debugging support
+Java script logging framework with support for remote logging and view component logging.
 
 Logging
 -------
