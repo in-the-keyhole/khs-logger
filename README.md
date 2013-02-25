@@ -45,7 +45,7 @@ Visual Logging, really helpful trying to determine view component boundaries, he
 			var compiled_template = _.template(Template);
 			var $el = $(this.el);
 			$el.html(compiled_template(this.model.toJSON()));
-			**$.Log.mark($el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());**	
+**			$.Log.mark($el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());**	
 			return this;
 	 }, ..
 
