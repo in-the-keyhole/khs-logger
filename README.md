@@ -40,9 +40,11 @@ Visual Logging
 Visual Logging, really helpful trying to determine view component boundaries, here's how to apply.
 
 Syntax 
+
      $.Log.mark(<div>,<message>,<optional JSON object>);
      
 Example applied to backgone.js view
+     
      ...
      render : function(eventName) {
 			var compiled_template = _.template(Template);
