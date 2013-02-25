@@ -8,10 +8,12 @@ Geting Started
 
 Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.1.zip] unzip in java script folder
 
-     // Load using <script>...<script> 
+Load using <script>...<script> i.e. JQuery is the only required dependency
+
      <script>lib/khs-logger.js</script>
      
-     // or as require.js AMD module
+Or as require.js AMD module
+
      paths : {
 		'underscore' : 'libs/underscore/underscore-loader',
 		'backbone' : 'libs/backbone/backbone-loader',
@@ -49,9 +51,6 @@ Capture all errors and log to remote end point
 		$.Log.error(message+"line:"+linenumber+"url:"+url);
 	 }
 
-Dependencies
-------------
-Logging framework require JQuery.js 
 
 Visual Logging
 --------------
