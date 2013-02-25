@@ -56,7 +56,11 @@ Visual Logging
 --------------
 Visual Logging, really helpful trying to determine view component boundaries, here's how to apply.
 
-Syntax 
+Turn marking on/off
+
+     $.Log.annotate = true;
+
+Mark and display a DIV on mouse over... 
 
      $.Log.mark(<div>,<message>,<optional JSON object>);
      
