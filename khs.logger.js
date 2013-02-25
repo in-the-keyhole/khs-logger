@@ -5,7 +5,7 @@
    if (!window.console) window.console = {};
    if (!window.console.log) window.console.log = function () { };
 	
-  $.LogLevel = { trace: 1, debug : 2, info: 3, warn: 4, error : 5, fatal: 6};
+  $.LogLevel = { log: 0, debug : 1, info: 2, warn: 3, error : 4};
 
   $.Log = {
 	
@@ -17,6 +17,18 @@
 		  
 		  color: "#FF0000",  // red
 	
+		  log: function(message) { 
+			  
+			  if (this.level <= $.LogLevel.log ) {          
+				  var msg = formatLog("LOG",message); 
+				  if (this.remoteLevel <= $.LogLevel.log) {           
+				     sendRemote(this.remoteUrl,msg);
+				  }
+		          console.log(msg);
+		  	   }
+		  },
+		  
+		  
 		  info: function(message) { 
 			  
 			  if (this.level <= $.LogLevel.info ) {          
