@@ -288,8 +288,8 @@
 			e.stopPropagation();
 			if (isShowing(current)) {
 				if (current != null) {
-					current.children('div#tooltip').remove();
-					current.css("outline", "");
+					//current.children('div#tooltip').remove();
+					//current.css("outline", "");
 				}
 				el.attr("title", savedTitle);
 			}
@@ -339,11 +339,9 @@
 
 			if (current != null) {
 				current.children('div#tooltip').remove();
-				showing = false;
 				current.attr("title", savedTitle);
 				current.css("outline", "");
 				current = null;
-
 			}
 
 			el.css("outline", "");
