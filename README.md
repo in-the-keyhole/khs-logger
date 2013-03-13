@@ -60,6 +60,11 @@ View Inspector
 --------------
 Inspect div's, really helpful with Backbone.js views and html templates, visually shows view/template boundaries, here's how to apply.
 
+Mousing over div's outlines and displays information by hitting CRTL ENTER, open inspector view with DBL Click, see screen shot below.
+
+![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
+
+
 Turn inpsector on
 
      $.Log.inspect();
@@ -78,6 +83,3 @@ Example applied to backbone.js view with $.Log.mark(...)
 			return this;
 	 }, ..
 
-Mousing over div's outlines and displays information by hitting CRTL ENTER, open inspector view with DBL Click, see screen shot below.
-
-![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
