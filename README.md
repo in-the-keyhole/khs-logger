@@ -3,7 +3,9 @@ khs-logger.js
 
 JavaScript logging library with support for remote logging. 
 
-Visual `<div>` inspector displays UI component boundaries, very helpful for backbone.js view template identification.
+Apply formatted logging expressions in your javascript applications, with configurable output options.
+
+Visual <div> inspector displays UI component boundaries, very helpful for backbone.js view template identification.
 
 Geting Started
 --------------
