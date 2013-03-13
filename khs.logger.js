@@ -380,7 +380,15 @@
 	;
 
 	$(function() {
-		// toggle inspector with keystroke event
+	
+		// add style
+		//addStyle();
+
+	});
+
+
+    function enableInspector() { 	
+    	// toggle inspector with keystroke event
 		window.onkeypress = function(e) {
 			if (e.keyCode == $.Log.keyCode) {
 				if (e.ctrlKey) {
@@ -393,11 +401,12 @@
 				}
 			}
 			;
-		};
-
+		}; 	
+		
 		// add style
-		addStyle();
+		addStyle();		
+    	
+    }
 
-	});
 
 })(window.jQuery);
