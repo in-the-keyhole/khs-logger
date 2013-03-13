@@ -52,11 +52,11 @@ Capture all errors and log to remote end point
 	 }
 
 
-Visual Logging
+View Inspector
 --------------
-Visual Logging, really helpful trying to determine view component boundaries, here's how to apply.
+Inspect div's, really helpful with Backbone.js views and html templates, visually shows view/template boundaries, here's how to apply.
 
-Turn marking on/off
+Turn inpsector on/off
 
      $.Log.annotate = true;
 
