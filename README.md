@@ -1,14 +1,18 @@
 khs-logger.js
 =============
 
-Java script logging framework with support for remote logging and view component logging.
+Java Script logging library with support for remote logging. 
+
+Apply formatted logging expressions in your javascript applications, with configurable output options.
+
+Visual inspector displays UI component boundaries, very helpful for backbone.js view/template identification.
 
 Geting Started
 --------------
 
-Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.1.zip] unzip in java script folder
+Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.1.zip] unzip in javascript folder
 
-Load using srcript tags, jQuery is the only required dependency
+Load using script tags, jQuery is the only required dependency
 
      <script>lib/khs-logger.js</script>
      
@@ -56,25 +60,24 @@ View Inspector
 --------------
 Inspect div's, really helpful with Backbone.js views and html templates, visually shows view/template boundaries, here's how to apply.
 
-Turn inpsector on/off
+Turn inpsector on
 
-     $.Log.annotate = true;
+     $.Log.inspect();
 
 Mark and display a DIV on mouse over... 
 
      $.Log.mark(<div>,<message>,<optional JSON object>);
      
-Example applied to backgone.js view
+Example applied to backbone.js view with $.Log.mark(...) 
      
      ...
      render : function(eventName) {
 			var compiled_template = _.template(Template);
-			var $el = $(this.el);
-			$el.html(compiled_template(this.model.toJSON()));
-			$.Log.mark($el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
+			this.$el.html(compiled_template(this.model.toJSON()));
+                        $.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
 			return this;
 	 }, ..
 
-Mousing over div's outlines and displays information, see screen shot below.
+Mousing over div's outlines and displays information by hitting CRTL ENTER, open inspector view with DBL Click, see screen shot below.
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
