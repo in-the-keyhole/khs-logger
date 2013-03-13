@@ -68,13 +68,13 @@ Mark and display a DIV on mouse over...
 
      $.Log.mark(<div>,<message>,<optional JSON object>);
      
-Example applied to backbone.js view
+Example applied to backbone.js view with $.Log.mark(...) 
      
      ...
      render : function(eventName) {
 			var compiled_template = _.template(Template);
 			this.$el.html(compiled_template(this.model.toJSON()));
-     Mark for inspection....$.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
+                        $.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
 			return this;
 	 }, ..
 
