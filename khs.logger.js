@@ -106,6 +106,10 @@
 
 		// visual inspecting methods
 
+	    inspect : function() {
+	       enableInspector();	
+	    },
+	    
 		inspectOn : function() {
 			inspector = true;
 		},
