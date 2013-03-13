@@ -74,10 +74,10 @@ Example applied to backbone.js view
      render : function(eventName) {
 			var compiled_template = _.template(Template);
 			this.$el.html(compiled_template(this.model.toJSON()));
-			$.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
+   Inspect ------->	$.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
 			return this;
 	 }, ..
 
-Mousing over div's outlines and displays information, CRTL ENTER opens inspector, see screen shot below.
+Mousing over div's outlines and displays information by hitting CRTL ENTER, open inspector view with DBL Click, see screen shot below.
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
