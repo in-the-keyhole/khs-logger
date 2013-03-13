@@ -74,7 +74,7 @@ Example applied to backbone.js view
      render : function(eventName) {
 			var compiled_template = _.template(Template);
 			this.$el.html(compiled_template(this.model.toJSON()));
- Mark for inspection....$.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
+     Mark for inspection....$.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
 			return this;
 	 }, ..
 
