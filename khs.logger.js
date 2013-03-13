@@ -288,7 +288,7 @@
 			e.stopPropagation();
 			if (isShowing(current)) {
 				if (current != null) {
-					//current.children('div#tooltip').remove();
+					current.children('div#tooltip').remove();
 					//current.css("outline", "");
 				}
 				el.attr("title", savedTitle);
