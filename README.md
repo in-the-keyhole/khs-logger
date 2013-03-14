@@ -3,10 +3,10 @@ khs-logger.js
 
 Java Script logging library with support for remote logging. 
 
-Visual Backbone.js view/template inspector, outlines and inspects backbone view for developer support. 
+Visual Backbone.js view/template inspector, outlines and inspects backbone.js views for developer support. 
 
-Geting Started
---------------
+Getting Started
+---------------
 
 Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.3.zip] unzip in javascript folder
 
@@ -63,14 +63,14 @@ View Inspector
 Inspect div's, really helpful with Backbone.js views and html templates, visually shows view/template boundaries, here's how to apply.
 
 Mousing over div's outlines and displays information by hitting CRTL ENTER, open inspector view with DBL Click, see screen shot below.
+View inspector has been enabled at this site [cgrok.com] give it a try...
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
 
-Give it a try at (cgrok.com)...
 
 Turn inpsector on
 
-     $.Log.inspect();
+     $.Log.inspect(); // active outliner with CTRL-ENTER, open inspector with DBL CLICK
 
 Mark and display a DIV on mouse over... 
 
