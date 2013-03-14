@@ -63,7 +63,7 @@ View Inspector
 Inspect div's, really helpful with Backbone.js views and html templates, visually shows view/template boundaries, here's how to apply.
 
 Mousing over div's outlines and displays information by hitting CRTL ENTER, open inspector view with DBL Click, see screen shot below.
-View inspector has been enabled at this site [cgrok.com] give it a try...
+View inspector has been enabled at this site [http://cgrok.com] give it a try...
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
 
