@@ -3,14 +3,12 @@ khs-logger.js
 
 Java Script logging library with support for remote logging. 
 
-Apply formatted logging expressions in your javascript applications, with configurable output options.
-
-Visual inspector displays UI component boundaries, very helpful for backbone.js view/template identification.
+Visual Backbone.js view/template inspector, outlines and inspects backbone view for developer support. 
 
 Geting Started
 --------------
 
-Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.1.zip] unzip in javascript folder
+Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.3.zip] unzip in javascript folder
 
 Load using script tags, jQuery is the only required dependency
 
@@ -49,6 +47,10 @@ Set remote logging level
 
      $.Log.remoteLevel = $.LogLevel.error;
      
+Before send call back function, so you can manipulate request headers
+
+     $.Log.beforeSend = function(xhr,opts) { // to stuff, ie. add security token is necessary};     
+     
 Capture all errors and log to remote end point                   
   
      window.onerror = function(message, url, linenumber) {
@@ -64,6 +66,7 @@ Mousing over div's outlines and displays information by hitting CRTL ENTER, open
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
 
+Give it a try at (cgrok.com)...
 
 Turn inpsector on
 
