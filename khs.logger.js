@@ -1,6 +1,6 @@
-//     khs.logger.js 0.0.1
+//     khs.logger.js 0.0.2
 
-//     (c) 2013 David Pitt, Keyhole Software LLC.
+//     (c) 2013 David Pitt, Keyhole Software LLC. www.keyholesoftware.com
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
 //     https://github.com/in-the-keyhole/khs-logger
@@ -48,7 +48,9 @@
 
 		color : "#FF0000", // red
 
-		remoteUrl : null, // remote url
+		remoteUrl : null, // remote url,
+		
+		beforeSend : null, // call back function allows request object modification
 
 		// Logging methods
 
@@ -57,7 +59,7 @@
 			if (this.level <= $.LogLevel.log) {
 				var msg = formatLog("LOG", message);
 				if (this.remoteLevel <= $.LogLevel.log) {
-					sendRemote(this.remoteUrl, msg);
+					sendRemote(this.remoteUrl, msg,this.beforeSend);
 				}
 				console.log(msg);
 			}
@@ -68,7 +70,7 @@
 			if (this.level <= $.LogLevel.info) {
 				var msg = formatLog("INFO", message);
 				if (this.remoteLevel <= $.LogLevel.info) {
-					sendRemote(this.remoteUrl, msg);
+					sendRemote(this.remoteUrl, msg,this.beforeSend);
 				}
 				console.info(msg);
 			}
@@ -78,7 +80,7 @@
 			if (this.level <= $.LogLevel.debug) {
 				var msg = formatLog("DEBUG", message);
 				if (this.remoteLevel <= $.LogLevel.debug) {
-					sendRemote(this.remoteUrl, msg);
+					sendRemote(this.remoteUrl, msg,this.beforeSend);
 				}
 				console.debug(msg);
 			}
@@ -88,7 +90,7 @@
 			if (this.level <= $.LogLevel.error) {
 				var msg = formatLog("ERROR", message);
 				if (this.remoteLevel <= $.LogLevel.error) {
-					sendRemote(this.remoteUrl, msg);
+					sendRemote(this.remoteUrl, msg, this.beforeSend);
 				}
 				console.error(msg);
 			}
@@ -98,7 +100,7 @@
 			if (this.level <= $.LogLevel.warn) {
 				var msg = formatLog("WARN", message);
 				if (this.remoteLevel <= $.LogLevel.warn) {
-					sendRemote(this.remoteUrl, msg);
+					sendRemote(this.remoteUrl, msg, this.beforeSend);
 				}
 				console.warn(msg);
 			}
@@ -258,11 +260,12 @@
 
 	};
 
-	var sendRemote = function(url, msg) {
+	var sendRemote = function(url, msg,beforeSend) {
 		if (url != null) {
 			var restful = url + "/" + encodeURI(msg.split('/').join(' '));
 			$.ajax({
 				url : restful,
+				beforeSend: beforeSend,
 				success : function(data) {
 
 				},
@@ -288,7 +291,7 @@
 			e.stopPropagation();
 			if (isShowing(current)) {
 				if (current != null) {
-					current.children('div#tooltip').remove();
+					current.children('div#khstooltip').remove();
 					//current.css("outline", "");
 				}
 				el.attr("title", savedTitle);
@@ -299,16 +302,16 @@
 
 			// Append the tooltip template and its value
 			el
-					.append('<div id="tooltip"><div class="tipHeader"></div><div class="tipBody"><h>'
-							+ tip + '</div><div class="tipFooter"></div></div>');
+					.append('<div id="khstooltip"><div class="khstipHeader"></div><div class="khstipBody"><h>'
+							+ tip + '</div><div class="khstipFooter"></div></div>');
 
 			// Set the X and Y axis of the tooltip
-			$('#tooltip').css('top', e.pageY + 5);
-			$('#tooltip').css('left', e.pageX + 10);
+			$('#khstooltip').css('top', e.pageY + 5);
+			$('#khstooltip').css('left', e.pageX + 10);
 
 			// Show the tooltip with faceIn effect
-			$('#tooltip').fadeIn('500');
-			$('#tooltip').fadeTo('10', 0.8);
+			$('#khstooltip').fadeIn('500');
+			$('#khstooltip').fadeTo('10', 0.8);
 
 		};
 
@@ -338,7 +341,7 @@
 		}).mouseleave(function(e) {
 
 			if (current != null) {
-				current.children('div#tooltip').remove();
+				current.children('div#khstooltip').remove();
 				current.attr("title", savedTitle);
 				current.css("outline", "");
 				current = null;
@@ -359,20 +362,20 @@
 
 	function addStyle() {
 
-		var tooltip = " #tooltip { " + " position:absolute; "
+		var tooltip = " #khstooltip { " + " position:absolute; "
 				+ " z-index:9999; " + " color:#fff; " + " font-size:10px; "
 				+ " width:580px; }";
 
-		var tooltipHeader = " #tooltip .tipHeader { " + "    height:8px; "
+		var tooltipHeader = " #khstooltip .khstipHeader { " + "    height:8px; "
 				+ "} ";
 
 		var iehack = "/* IE hack */"
-				+ "*html #tooltip .tipHeader {margin-bottom:-6px;}";
+				+ "*html #khstooltip .khstipHeader {margin-bottom:-6px;}";
 
-		var tooltipBody = "#tooltip .tipBody {" + " background-color:#000; "
+		var tooltipBody = "#khstooltip .khstipBody {" + " background-color:#000; "
 				+ " padding:5px; " + " }";
 
-		var tooltipFooter = "#tooltip .tipFooter {" + " height:8px; " + " } ";
+		var tooltipFooter = "#khstooltip .khstipFooter {" + " height:8px; " + " } ";
 
 		$(
 				"<style>" + tooltip + tooltipHeader + iehack + tooltipBody
