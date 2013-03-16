@@ -16,14 +16,21 @@ Load using script tags, jQuery is the only required dependency
      
 Or as require.js AMD module
 
-     paths : {
-		'underscore' : 'libs/underscore/underscore-loader',
-		'backbone' : 'libs/backbone/backbone-loader',
-		'text' : 'libs/require/require-text-2.0.0',
+
+	 paths : {
+		...
 		'jquery' : 'libs/jquery-1.7.2',
 		'log' : 'libs/khs.logger'
-     },
-     
+	 },
+	 shim: {
+		//khs-logger depends on jQuery
+		'log':['jquery']
+	 }
+
+#####Note: khs-logger is a true AMD module, and can be loaded this way if desired:
+	 require( ["libs/khs-logger"], function(logger) {
+		logger.info("loaded with AMD");
+	 }
 
 Logging
 -------
