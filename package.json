@@ -1,6 +1,6 @@
 {
     "name": "khs.logger",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Java Script logging library with support for remote logging",
     "author": "David Pitt <dpitt@keyholesoftware.com>",
     "dependencies": {

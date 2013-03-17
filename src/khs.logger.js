@@ -1,4 +1,4 @@
-//     khs.logger.js 0.0.2
+//     khs.logger.js 0.0.4
 
 //     (c) 2013 David Pitt, Keyhole Software LLC. www.keyholesoftware.com
 //     Backbone may be freely distributed under the MIT license.
@@ -21,23 +21,29 @@
     var savedTitle = null;
 
     // IE 8,9 console work around
-    if (!window.console)
+    if (!window.console) {
         window.console = {};
-    if (!window.console.log)
+    }
+    if (!window.console.log) {
         window.console.log = function () {
         };
-    if (!window.console.info)
+    }
+    if (!window.console.info) {
         window.console.info = function () {
         };
-    if (!window.console.debug)
+    }
+    if (!window.console.debug) {
         window.console.debug = function () {
         };
-    if (!window.console.error)
+    }
+    if (!window.console.error) {
         window.console.error = function () {
         };
-    if (!window.console.warn)
+    }
+    if (!window.console.warn) {
         window.console.warn = function () {
         };
+    }
 
     $.LogLevel = {
         log:0,
@@ -130,41 +136,32 @@
         },
 
         isInspecting:function () {
-
             return inspector;
-
         },
 
         mark:function ($el, title, json) {
 
             var model = "<b>Model:<b>&nbsp;</br>";
-            var clipboard = "<a href=javascript:copyToClipboard('" + json
-                + "');>clipboard</a>";
+            var clipboard = "<a href=javascript:copyToClipboard('" + json + "');>clipboard</a>";
             var options = "<div><button style='height: 12px;width: 100px' >Copy Json</button></div>";
-            var info = "<div><b>Id:&nbsp;</b>" + $el.attr("id")
-                + "</br><b>View:&nbsp;</b>" + title + "</div>";
-            if (json != null) {
-                model += "<div style='height : 150px; overflow : auto;'><pre>"
-                    + formatJSON(json, "") + "</pre></div>";
+            var info = "<div><b>Id:&nbsp;</b>" + $el.attr("id") + "</br><b>View:&nbsp;</b>" + title + "</div>";
+            if (json !== null) {
+                model += "<div style='height : 150px; overflow : auto;'><pre>" + formatJSON(json, "") + "</pre></div>";
                 info += model;
             }
 
             tooltip($el, info);
-
         },
 
         render:function (view, title, renderFunc) {
             this.pre(title);
-            var $el = $(view.el);
-            var model = view.model;
             var json = "\n\nModel:";
-            if (model != null) {
-                json += "<div style='height : 150px; overflow : auto;'>" + formatJSON(model.toJSON(), "") + "</div>";
+            if (view.model) {
+                json += "<div style='height : 150px; overflow : auto;'>" + formatJSON(view.model.toJSON(), "") + "</div>";
             }
-            this.mark($el, title + json);
+            this.mark(view.$el, title + json);
             renderFunc.apply(null, [ view ]);
             this.post(title);
-
         },
 
         pre:function (title) {
@@ -180,37 +177,43 @@
     // JSON formatting functions
 
     var realTypeOf = function (v) {
-        if (typeof (v) == "object") {
-            if (v === null)
+        if (typeof (v) === "object") {
+            if (v === null) {
                 return "null";
-            if (v.constructor == (new Array).constructor)
+            }
+            if (v.constructor === ([]).constructor) {
                 return "array";
-            if (v.constructor == (new Date).constructor)
+            }
+            if (v.constructor === (new Date()).constructor) {
                 return "date";
-            if (v.constructor == (new RegExp).constructor)
+            }
+            if (v.constructor === (new RegExp()).constructor) {
                 return "regex";
+            }
             return "object";
         }
         return typeof (v);
     };
 
     var formatJSON = function (oData, sIndent) {
+        var sHTML;
+        var iCount;
         if (arguments.length < 2) {
             sIndent = "";
         }
         var sIndentStyle = "    ";
         var sDataType = realTypeOf(oData);
-        if (sDataType == "array") {
-            if (oData.length == 0) {
+        if (sDataType === "array") {
+            if (oData.length === 0) {
                 return "[]";
             }
-            var sHTML = "[";
+            sHTML = "[";
         } else {
-            var iCount = 0;
+            iCount = 0;
             $.each(oData, function () {
                 iCount++;
             });
-            if (iCount == 0) {
+            if (iCount === 0) {
                 return "{}";
             }
             sHTML = "{";
@@ -224,8 +227,7 @@
                 if (sDataType == "array") {
                     sHTML += ("\n" + sIndent + sIndentStyle);
                 } else {
-                    sHTML += ("\n" + sIndent + sIndentStyle + "\"" + sKey
-                        + "\"" + ": ");
+                    sHTML += ("\n" + sIndent + sIndentStyle + "\"" + sKey + "\"" + ": ");
                 }
 
                 switch (realTypeOf(vValue)) {
@@ -258,14 +260,12 @@
 
     var formatLog = function (prefix, msg) {
         var now = new Date();
-        var dt = now.getFullYear() + "-" + (now.getMonth() + 1) + "-"
-            + now.getDate() + ":" + now.getHours() + ":" + now.getMinutes()
-            + ":" + now.getSeconds() + ":" + now.getMilliseconds();
+        var dt = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + ":" + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + ":" + now.getMilliseconds();
         return prefix + ":" + dt + "->" + msg;
     };
 
     var sendRemote = function (url, msg, beforeSend) {
-        if (url != null) {
+        if (url !== null) {
             var restful = url + "/" + encodeURI(msg.split('/').join(' '));
             $.ajax({
                 url:restful,
@@ -289,7 +289,7 @@
 
             e.stopPropagation();
             if (isShowing(current)) {
-                if (current != null) {
+                if (current !== null) {
                     current.children('div#khstooltip').remove();
                     //current.css("outline", "");
                 }
@@ -301,8 +301,7 @@
 
             // Append the tooltip template and its value
             el
-                .append('<div id="khstooltip"><div class="khstipHeader"></div><div class="khstipBody"><h>'
-                + tip + '</div><div class="khstipFooter"></div></div>');
+                .append('<div id="khstooltip"><div class="khstipHeader"></div><div class="khstipBody"><h>' + tip + '</div><div class="khstipFooter"></div></div>');
 
             // Set the X and Y axis of the tooltip
             $('#khstooltip').css('top', e.pageY + 5)
@@ -336,7 +335,7 @@
 
             }).mouseleave(function (e) {
 
-                if (current != null) {
+                if (current !== null) {
                     current.children('div#khstooltip').remove();
                     current.attr("title", savedTitle);
                     current.css("outline", "");
@@ -356,18 +355,13 @@
 
     function addStyle() {
 
-        var tooltip = " #khstooltip { " + " position:absolute; "
-            + " z-index:9999; " + " color:#fff; " + " font-size:10px; "
-            + " width:580px; }";
+        var tooltip = " #khstooltip { " + " position:absolute; " + " z-index:9999; " + " color:#fff; " + " font-size:10px; " + " width:580px; }";
 
-        var tooltipHeader = " #khstooltip .khstipHeader { " + "    height:8px; "
-            + "} ";
+        var tooltipHeader = " #khstooltip .khstipHeader { " + " height:8px; " + "} ";
 
-        var iehack = "/* IE hack */"
-            + "*html #khstooltip .khstipHeader {margin-bottom:-6px;}";
+        var iehack = "/* IE hack */" + "*html #khstooltip .khstipHeader {margin-bottom:-6px;}";
 
-        var tooltipBody = "#khstooltip .khstipBody {" + " background-color:#000; "
-            + " padding:5px; " + " }";
+        var tooltipBody = "#khstooltip .khstipBody {" + " background-color:#000; " + " padding:5px; " + " }";
 
         var tooltipFooter = "#khstooltip .khstipFooter {" + " height:8px; " + " } ";
 
