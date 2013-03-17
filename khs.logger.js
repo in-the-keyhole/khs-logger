@@ -49,7 +49,7 @@
 
     $.Log = {
 
-        keyCode:13, // default enter
+        keyCodes:[10,13], // 13 is default Enter key, but in Chrome, when ctrl key + Enter is pressed, keyCode is 10
 
         level:$.LogLevel.info, // default
 
@@ -375,10 +375,18 @@
         $(html).appendTo("body");
     }
 
+    $(function () {
+
+        // add style
+        //addStyle();
+
+    });
+
+
     function enableInspector() {
         // toggle inspector with keystroke event
         window.onkeypress = function (e) {
-            if (e.keyCode == $.Log.keyCode) {
+            if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {
                 if (e.ctrlKey) {
                     if ($.Log.isInspecting()) {
                         $.Log.inspectOff();
@@ -391,6 +399,7 @@
 
         // add style
         addStyle();
+
     }
 
     //return for AMD so that can be used like below, without shim configuration if desired
@@ -399,3 +408,4 @@
     //});
     return $.Log;
 }));
+
