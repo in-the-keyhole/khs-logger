@@ -19,6 +19,8 @@
     var inspector = false;
     var current = null;
     var savedTitle = null;
+	var inspectorEnabled = false;
+
 
     // IE 8,9 console work around
     if (!window.console) {
@@ -58,6 +60,10 @@
         keyCodes:[10,13], // 13 is default Enter key, but in Chrome, when ctrl key + Enter is pressed, keyCode is 10
 
         level:$.LogLevel.info, // default
+        
+        divs : {},
+		
+		inspectors: {},
 
         remoteLevel:$.LogLevel.error, // default error
 
@@ -124,6 +130,7 @@
         // visual inspecting methods
 
         inspect:function () {
+        	inspectorEnabled = true;
             enableInspector();
         },
 
@@ -140,16 +147,22 @@
         },
 
         mark:function ($el, title, json) {
+        	
+    		// only mark el if inspector is enabled
+			if (!inspectorEnabled) {return;}
 
             var model = "<b>Model:<b>&nbsp;</br>";
             var clipboard = "<a href=javascript:copyToClipboard('" + json + "');>clipboard</a>";
             var options = "<div><button style='height: 12px;width: 100px' >Copy Json</button></div>";
             var info = "<div><b>Id:&nbsp;</b>" + $el.attr("id") + "</br><b>View:&nbsp;</b>" + title + "</div>";
-            if (json !== null) {
+            if (json !== null & json !== undefined) {
                 model += "<div style='height : 150px; overflow : auto;'><pre>" + formatJSON(json, "") + "</pre></div>";
                 info += model;
             }
 
+        	var key = $el.attr("id")+title;
+			this.divs[key] = $el;
+            
             tooltip($el, info);
         },
 
@@ -170,8 +183,21 @@
 
         post:function (title) {
             console.info(formatLog("INFO", title));
-        }
-
+        },
+        
+    	showOutline : function() {	
+			for (var title in this.divs) {
+				this.divs[title].css("outline","medium solid #FF0000");
+			}			
+		},
+		
+		hideOutline : function() {	
+			for (var title in this.divs) {
+				this.divs[title].css("outline","");
+			}			
+		}
+        
+  
     };
 
     // JSON formatting functions
@@ -245,7 +271,7 @@
                     case "string":
                         sHTML += ("\"" + vValue + "\"");
                         break;
-                    default:
+                   default:
                         sHTML += ("TYPEOF: " + typeof (vValue));
                 }
                 iCount++;
@@ -382,6 +408,7 @@
         window.onkeypress = function (e) {
             if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {
                 if (e.ctrlKey) {
+                	$.Log.showOutline();
                     if ($.Log.isInspecting()) {
                         $.Log.inspectOff();
                     } else {
@@ -391,6 +418,13 @@
             }
         };
 
+        
+        window.onkeyup = function(e) {
+			if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {			
+				$.Log.hideOutline();						
+			}
+		};
+        
         // add style
         addStyle();
 
