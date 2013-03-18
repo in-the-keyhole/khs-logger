@@ -8,7 +8,7 @@ Visual Backbone.js view/template inspector, outlines and inspects backbone.js vi
 Getting Started
 ---------------
 
-Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.3.zip] unzip in javascript folder
+Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.4.zip] unzip in javascript folder
 
 Load using script tags, jQuery is the only required dependency
 
