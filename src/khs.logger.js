@@ -66,7 +66,7 @@
         
         divs : {},
 		
-		inspectors: {},
+		inspectors: [],
 		
 		logLocal: false,
 		
@@ -168,7 +168,11 @@
         isInspecting:function () {
             return inspector;
         },
-
+        
+        install:function (inspectModule) {     	
+        	this.inspectors.push(inspectModule);
+        },
+             
         mark:function ($el, title, json) {
         	
     		// only mark el if inspector is enabled
@@ -198,6 +202,23 @@
 			for (var title in this.divs) {
 				this.divs[title].css("outline","");
 			}			
+		},
+		
+		localStorageLogInspector : function() {
+		    // displays local storage log	
+			return function(el) {		
+			 var logHTML = "<b>Log Entries ("+$.Log.logLength+")</b>";
+    		 logHTML += "<div style='height : 150px; overflow : auto;'><pre>";
+    		 var log = JSON.parse(localStorage["local.logs"]);
+    		 for (var l in log.entries) {
+				logHTML += log.entries[l] + "</br>";
+			  }			
+    		  logHTML += "</pre></div>";
+    		         
+              return logHTML;
+			};
+			
+			
 		}
         
   
@@ -307,20 +328,6 @@
         }
     };
 
-    function showLogInspector() {
-
-    		var logHTML = "<b>Log Entries ("+$.Log.logLength+")</b>";
-    		logHTML += "<div style='height : 150px; overflow : auto;'><pre>";
-    		var log = JSON.parse(localStorage["local.logs"]);
-    		for (var l in log.entries) {
-				logHTML += log.entries[l] + "</br>";
-			}			
-    		logHTML += "</pre></div>";
-    		         
-            return logHTML;
-
-    };
-     
     function pad(number,pad){
     	return(1e15+number+"").slice(-pad)}
     
@@ -344,12 +351,14 @@
 
             savedTitle = el.attr("title");
             el.attr("title", "showing");
-            
-            if ($.Log.logLocal) {
-            	var logHTML = showLogInspector();
-            }
-
-            var info = tip + logHTML;
+                 
+            // apply inspectors
+            var inspectorHTML = "";
+            for (var i in $.Log.inspectors) {
+				inspectorHTML += $.Log.inspectors[i].call(el,null);
+			}	
+                       
+            var info = tip + inspectorHTML;
             
             // Append the tooltip template and its value
             el
