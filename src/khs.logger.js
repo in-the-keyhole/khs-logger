@@ -20,6 +20,7 @@
     var current = null;
     var savedTitle = null;
 	var inspectorEnabled = false;
+	var logLength = null;
 
 
     // IE 8,9 console work around
@@ -59,11 +60,17 @@
 
         keyCodes:[10,13], // 13 is default Enter key, but in Chrome, when ctrl key + Enter is pressed, keyCode is 10
 
+        logKeyCode: 17,  // default is L
+        
         level:$.LogLevel.info, // default
         
         divs : {},
 		
 		inspectors: {},
+		
+		logLocal: false,
+		
+		logLength: 100,  // default 100 lines...
 
         remoteLevel:$.LogLevel.error, // default error
 
@@ -82,6 +89,9 @@
                 if (this.remoteLevel <= $.LogLevel.log) {
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
+                if (this.logLocal) {
+                	local(msg);
+                }
                 console.log(msg);
             }
         },
@@ -93,6 +103,9 @@
                 if (this.remoteLevel <= $.LogLevel.info) {
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
+                if (this.logLocal) {
+                	local(msg);
+                }
                 console.info(msg);
             }
         },
@@ -103,6 +116,10 @@
                 if (this.remoteLevel <= $.LogLevel.debug) {
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
+                if (this.logLocal) {
+                	local(msg);
+                }
+                
                 console.debug(msg);
             }
         },
@@ -113,6 +130,9 @@
                 if (this.remoteLevel <= $.LogLevel.error) {
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
+                if (this.logLocal) {
+                	local(msg);
+                }
                 console.error(msg);
             }
         },
@@ -122,6 +142,9 @@
                 var msg = formatLog("WARN", message);
                 if (this.remoteLevel <= $.LogLevel.warn) {
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
+                }
+                if (this.logLocal) {
+                	local(msg);
                 }
                 console.warn(msg);
             }
@@ -159,32 +182,12 @@
                 model += "<div style='height : 150px; overflow : auto;'><pre>" + formatJSON(json, "") + "</pre></div>";
                 info += model;
             }
-
         	var key = $el.attr("id")+title;
-			this.divs[key] = $el;
-            
+			this.divs[key] = $el;         
             tooltip($el, info);
+        	$.Log.debug("Marked "+title+" for inspection");
         },
-
-        render:function (view, title, renderFunc) {
-            this.pre(title);
-            var json = "\n\nModel:";
-            if (view.model) {
-                json += "<div style='height : 150px; overflow : auto;'>" + formatJSON(view.model.toJSON(), "") + "</div>";
-            }
-            this.mark(view.$el, title + json);
-            renderFunc.apply(null, [ view ]);
-            this.post(title);
-        },
-
-        pre:function (title) {
-            console.info(formatLog("INFO", title));
-        },
-
-        post:function (title) {
-            console.info(formatLog("INFO", title));
-        },
-        
+ 
     	showOutline : function() {	
 			for (var title in this.divs) {
 				this.divs[title].css("outline","medium solid #FF0000");
@@ -286,10 +289,10 @@
 
     var formatLog = function (prefix, msg) {
         var now = new Date();
-        var dt = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + ":" + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + ":" + now.getMilliseconds();
+        var dt = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + ":" + pad(now.getHours(),2) + ":" + pad(now.getMinutes(),2) + ":" + pad(now.getSeconds(),2) + ":" + pad(now.getMilliseconds(),3);
         return prefix + ":" + dt + "->" + msg;
-    };
-
+    };   
+    
     var sendRemote = function (url, msg, beforeSend) {
         if (url !== null) {
             var restful = url + "/" + encodeURI(msg.split('/').join(' '));
@@ -304,6 +307,23 @@
         }
     };
 
+    function showLogInspector() {
+
+    		var logHTML = "<b>Log Entries ("+$.Log.logLength+")</b>";
+    		logHTML += "<div style='height : 150px; overflow : auto;'><pre>";
+    		var log = JSON.parse(localStorage["local.logs"]);
+    		for (var l in log.entries) {
+				logHTML += log.entries[l] + "</br>";
+			}			
+    		logHTML += "</pre></div>";
+    		         
+            return logHTML;
+
+    };
+     
+    function pad(number,pad){
+    	return(1e15+number+"").slice(-pad)}
+    
     function tooltip(el, tip) {
 
         // create click function
@@ -324,11 +344,17 @@
 
             savedTitle = el.attr("title");
             el.attr("title", "showing");
+            
+            if ($.Log.logLocal) {
+            	var logHTML = showLogInspector();
+            }
 
+            var info = tip + logHTML;
+            
             // Append the tooltip template and its value
             el
-                .append('<div id="khstooltip"><div class="khstipHeader"></div><div class="khstipBody"><h>' + tip + '</div><div class="khstipFooter"></div></div>');
-
+                .append('<div id="khstooltip"><div class="khstipHeader"></div><div class="khstipBody"><h>' + info + '</div><div class="khstipFooter"></div></div>');
+            
             // Set the X and Y axis of the tooltip
             $('#khstooltip').css('top', e.pageY + 5)
                 .css('left', e.pageX + 10)
@@ -372,6 +398,23 @@
 
             });
     }
+    
+    function local(message) { 	
+    	var str = localStorage["local.logs"];
+    	var log = null;
+    	if (str == null || str == undefined || str == "") {
+    		 log = {entries:[]};
+    	} else {
+    		log = JSON.parse(str);	
+    	}
+    	
+    	log.entries.push(message);
+    	if (log.entries.length > $.Log.logLength) {
+    		log.entries.shift();
+    	}
+    	localStorage["local.logs"] = JSON.stringify(log);  
+ 
+    }
 
     function isShowing(el) {
         var title = el.attr("title");
@@ -397,9 +440,7 @@
 
     $(function () {
 
-        // add style
-        //addStyle();
-
+  
     });
 
 
@@ -409,16 +450,19 @@
             if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {
                 if (e.ctrlKey) {
                 	$.Log.showOutline();
-                    if ($.Log.isInspecting()) {
+                    if ($.Log.isInspecting()) {                   
                         $.Log.inspectOff();
+                    	$.Log.debug("inspecting off");
                     } else {
                         $.Log.inspectOn();
-                    }
+                        $.Log.debug("inspecting on");
+                    }                    
                 }
             }
-        };
-
-        
+            
+  
+        };    
+                    
         window.onkeyup = function(e) {
 			if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {			
 				$.Log.hideOutline();						
