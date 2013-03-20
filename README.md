@@ -103,3 +103,5 @@ that accepts a DOM DIV element for a view. Here's an example hello world inspect
 
 Custom inspector will appear in the inspector view is opened with a DBL-CLICK. Here's a screen shot....
 
+![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/inspector.png)
+
