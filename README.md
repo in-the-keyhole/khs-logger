@@ -119,7 +119,7 @@ Set number of records stored in local storage
      $.Log.logLength = 200; // default is 100
 
      
-Local Storage inspector is available
+Local Storage inspector is available and can be installed
 
       $.Log.install($.Log.localStorageLogInspector()); // install local storage inspector
 
