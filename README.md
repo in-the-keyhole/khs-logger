@@ -106,5 +106,27 @@ Custom inspector will appear in the inspector view when opened with a DBL-CLICK.
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/inspector.png)
 
 
+Local Storage Logging
+---------------------
+Log entries can be stored in a local storage bucket. This can be useful for troubleshooting user problems. 
+
+Turn on local storage
+
+     $.Log.logLocal = true; // default is false 
+     
+Set number of records stored in local storage
+
+     $.Log.logLength = 200; // default is 100
+
+     
+Local Storage inspector is available
+
+      $.Log.install($.Log.localStorageLogInspector()); // install local storage inspector
+
+Screen shot of localStorageLog inspector
+
+![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/local-inspector.png)
+
+
 
 
