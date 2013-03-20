@@ -1,4 +1,4 @@
-//     khs.logger.js 0.0.4
+//     khs.logger.js 0.0.5
 
 //     (c) 2013 David Pitt, Keyhole Software LLC. www.keyholesoftware.com
 //     Backbone may be freely distributed under the MIT license.
@@ -219,8 +219,15 @@
 			};
 			
 			
-		}
-        
+		},
+		
+	  localLogEntries : function() {		  
+		return JSON.parse(localStorage["local.logs"]);  		  		  
+	  },	
+		
+	  resetLocalLog : function() {		  
+		  localStorage["local.logs"] = "";		  
+	  }	      
   
     };
 
@@ -355,7 +362,7 @@
             // apply inspectors
             var inspectorHTML = "";
             for (var i in $.Log.inspectors) {
-				inspectorHTML += $.Log.inspectors[i].call(el,null);
+				inspectorHTML += $.Log.inspectors[i].call(null,el);
 			}	
                        
             var info = tip + inspectorHTML;
