@@ -3,7 +3,8 @@ khs-logger.js
 
 Java Script logging library with support for remote logging. 
 
-Visual Backbone.js view/template inspector, outlines and inspects backbone.js views for developer support. 
+Visual Backbone.js view/template inspector, outlines and inspects backbone.js views for developer support.
+
 
 Getting Started
 ---------------
@@ -92,4 +93,13 @@ Example applied to backbone.js view with $.Log.mark(...)
                         $.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
 			return this;
 	 }, ..
+
+Custom Inspectors
+-----------------
+Custom inspectors can be defined to display information in the view inspection window. A custom inspector is defined as a function closure,
+that accepts a DOM DIV element for a view. Here's an example hello world inspector definition and installation.
+
+     $.Log.install(function(el) { return "Hello World, there are "+el.children().length+" elements"; }  );
+
+Custom inspector will appear in the inspector view is opened with a DBL-CLICK. Here's a screen shot....
 
