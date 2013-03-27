@@ -1,15 +1,15 @@
 khs-logger.js
 =============
 
-Java Script logging library with support for remote logging. 
+JavaScript logging library with support for remote logging. 
 
-Visual Backbone.js view/template inspector, outlines and inspects backbone.js views for developer support.
+Visual Backbone.js View/Template inspector. Inspect and outline Backbone.js Views for developer support.
 
 
 Getting Started
 ---------------
 
-Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.5.zip] unzip in javascript folder
+Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.5.zip] unzip in JavaScript folder
 
 Load using script tags, jQuery is the only required dependency
 
@@ -68,23 +68,23 @@ Capture all errors and log to remote end point
 
 View Inspector
 --------------
-Inspect div's, really helpful with Backbone.js views and html templates, visually shows view/template boundaries, here's how to apply.
+Inspect divs - really helpful with Backbone.js Views and HTML templates, as it visually shows View/Template boundaries. Here's how to apply:
 
-Mousing over div's outlines and displays information by hitting CRTL ENTER, open inspector view with DBL Click, see screen shot below.
-View inspector has been enabled at this site [http://cgrok.com] give it a try...
+Mousing over divs outlines and displays information by hitting CRTL ENTER. Open Inspector View with DBL Click. See screen shot below.
+View inspector has been enabled at this site [http://cgrok.com], give it a try...
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
 
 
-Turn inpsector on
+Turn inspector on
 
      $.Log.inspect(); // active outliner with CTRL-ENTER, open inspector with DBL CLICK
 
-Mark and display a DIV on mouse over... 
+Mark and display a DIV on mouseover... 
 
      $.Log.mark(<div>,<message>,<optional JSON object>);
      
-Example applied to backbone.js view with $.Log.mark(...) 
+Example applied to Backbone.js View with $.Log.mark(...) 
      
      ...
      render : function(eventName) {
@@ -96,12 +96,12 @@ Example applied to backbone.js view with $.Log.mark(...)
 
 Custom Inspectors
 -----------------
-Custom inspectors can be defined to display information in the view inspection window. A custom inspector is defined as a function closure,
-that accepts a DOM DIV element for a view. Here's an example hello world inspector definition and installation.
+Custom inspectors can be defined to display information in the View inspection window. A custom inspector is defined as a function closure
+that accepts a DOM DIV element for a View. Here's an example hello world inspector definition and installation:
 
      $.Log.install(function(el) { return "Hello World, there are "+el.children().length+" elements"; }  );
 
-Custom inspector will appear in the inspector view when opened with a DBL-CLICK. Here's a screen shot....
+Custom inspector will appear in the inspector View when opened with a DBL-CLICK. Here's a screen shot:
 
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/inspector.png)
 
