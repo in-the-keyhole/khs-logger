@@ -19,8 +19,8 @@
     var inspector = false;
     var current = null;
     var savedTitle = null;
-	var inspectorEnabled = false;
-	var logLength = null;
+    var inspectorEnabled = false;
+    var logLength = null;
 
 
     // IE 8,9 console work around
@@ -65,12 +65,12 @@
         level:$.LogLevel.info, // default
         
         divs : {},
-		
-		inspectors: [],
-		
-		logLocal: false,
-		
-		logLength: 100,  // default 100 lines...
+        
+        inspectors: [],
+        
+        logLocal: false,
+        
+        logLength: 100,  // default 100 lines...
 
         remoteLevel:$.LogLevel.error, // default error
 
@@ -90,7 +90,7 @@
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
                 if (this.logLocal) {
-                	local(msg);
+                    local(msg);
                 }
                 console.log(msg);
             }
@@ -104,7 +104,7 @@
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
                 if (this.logLocal) {
-                	local(msg);
+                    local(msg);
                 }
                 console.info(msg);
             }
@@ -117,7 +117,7 @@
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
                 if (this.logLocal) {
-                	local(msg);
+                    local(msg);
                 }
                 
                 console.debug(msg);
@@ -131,7 +131,7 @@
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
                 if (this.logLocal) {
-                	local(msg);
+                    local(msg);
                 }
                 console.error(msg);
             }
@@ -144,7 +144,7 @@
                     sendRemote(this.remoteUrl, msg, this.beforeSend);
                 }
                 if (this.logLocal) {
-                	local(msg);
+                    local(msg);
                 }
                 console.warn(msg);
             }
@@ -153,7 +153,7 @@
         // visual inspecting methods
 
         inspect:function () {
-        	inspectorEnabled = true;
+            inspectorEnabled = true;
             enableInspector();
         },
 
@@ -169,65 +169,65 @@
             return inspector;
         },
         
-        install:function (inspectModule) {     	
-        	this.inspectors.push(inspectModule);
+        install:function (inspectModule) {      
+            this.inspectors.push(inspectModule);
         },
              
         mark:function ($el, title, json) {
-        	
-    		// only mark el if inspector is enabled
-			if (!inspectorEnabled) {return;}
+            
+            // only mark el if inspector is enabled
+            if (!inspectorEnabled) {return;}
 
             var model = "<b>Model:<b>&nbsp;</br>";
             var clipboard = "<a href=javascript:copyToClipboard('" + json + "');>clipboard</a>";
             var options = "<div><button style='height: 12px;width: 100px' >Copy Json</button></div>";
             var info = "<div><b>Id:&nbsp;</b>" + $el.attr("id") + "</br><b>View:&nbsp;</b>" + title + "</div>";
             if (json !== null & json !== undefined) {
-                model += "<div style='height : 150px; overflow : auto;'><pre>" + formatJSON(json, "") + "</pre></div>";
+                model += "<div style='max-height : 512px; overflow : auto;'><pre>" + formatJSON(json, "") + "</pre></div>";
                 info += model;
             }
-        	var key = $el.attr("id")+title;
-			this.divs[key] = $el;         
+            var key = $el.attr("id")+title;
+            this.divs[key] = $el;         
             tooltip($el, info);
-        	$.Log.debug("Marked "+title+" for inspection");
+            $.Log.debug("Marked "+title+" for inspection");
         },
  
-    	showOutline : function() {	
-			for (var title in this.divs) {
-				this.divs[title].css("outline","medium solid #FF0000");
-			}			
-		},
-		
-		hideOutline : function() {	
-			for (var title in this.divs) {
-				this.divs[title].css("outline","");
-			}			
-		},
-		
-		localStorageLogInspector : function() {
-		    // displays local storage log	
-			return function(el) {		
-			 var logHTML = "<b>Log Entries ("+$.Log.logLength+")</b>";
-    		 logHTML += "<div style='height : 150px; overflow : auto;'><pre>";
-    		 var log = JSON.parse(localStorage["local.logs"]);
-    		 for (var l in log.entries) {
-				logHTML += log.entries[l] + "</br>";
-			  }			
-    		  logHTML += "</pre></div>";
-    		         
+        showOutline : function() {  
+            for (var title in this.divs) {
+                this.divs[title].css("outline","medium solid #FF0000");
+            }           
+        },
+        
+        hideOutline : function() {  
+            for (var title in this.divs) {
+                this.divs[title].css("outline","");
+            }           
+        },
+        
+        localStorageLogInspector : function() {
+            // displays local storage log   
+            return function(el) {       
+             var logHTML = "<b>Log Entries ("+$.Log.logLength+")</b>";
+             logHTML += "<div style='height : 150px; overflow : auto;'><pre>";
+             var log = JSON.parse(localStorage["local.logs"]);
+             for (var l in log.entries) {
+                logHTML += log.entries[l] + "</br>";
+              }         
+              logHTML += "</pre></div>";
+                     
               return logHTML;
-			};
-			
-			
-		},
-		
-	  localLogEntries : function() {		  
-		return JSON.parse(localStorage["local.logs"]);  		  		  
-	  },	
-		
-	  resetLocalLog : function() {		  
-		  localStorage["local.logs"] = "";		  
-	  }	      
+            };
+            
+            
+        },
+        
+      localLogEntries : function() {          
+        return JSON.parse(localStorage["local.logs"]);                    
+      },    
+        
+      resetLocalLog : function() {        
+          localStorage["local.logs"] = "";        
+      }       
   
     };
 
@@ -336,7 +336,7 @@
     };
 
     function pad(number,pad){
-    	return(1e15+number+"").slice(-pad)}
+        return(1e15+number+"").slice(-pad)}
     
     function tooltip(el, tip) {
 
@@ -350,7 +350,7 @@
             e.stopPropagation();
             if (isShowing(current)) {
                 if (current !== null) {
-                    current.children('div#khstooltip').remove();
+                    $("#khstooltip").remove();
                     //current.css("outline", "");
                 }
                 el.attr("title", savedTitle);
@@ -362,22 +362,43 @@
             // apply inspectors
             var inspectorHTML = "";
             for (var i in $.Log.inspectors) {
-				inspectorHTML += $.Log.inspectors[i].call(null,el);
-			}	
+                inspectorHTML += $.Log.inspectors[i].call(null,el);
+            }   
                        
             var info = tip + inspectorHTML;
             
-            // Append the tooltip template and its value
-            el
-                .append('<div id="khstooltip"><div class="khstipHeader"></div><div class="khstipBody"><h>' + info + '</div><div class="khstipFooter"></div></div>');
+            // append to the body
+            $("body").append('<div id="khstooltip"><div class="khstipHeader"><span class="closeButton">X</span></div><div class="khstipBody"><h>' + info + '</div><div class="khstipFooter"></div></div>');
             
             // Set the X and Y axis of the tooltip
-            $('#khstooltip').css('top', e.pageY + 5)
-                .css('left', e.pageX + 10)
+            $('#khstooltip').css('top', e.pageY)
+                .css('left', e.pageX)
                 .fadeIn('500')
                 .fadeTo('10', 0.8);
+            $("#khstooltip .closeButton").css({
+                "float": "right",
+                "font-size": "14px",
+                "background-color": "#FFFFFF",
+                "color": "#000000",
+                "padding": "4px",
+                "margin-top": "8px",
+                "font-weight": "700"
+            }).hover(function() {
+                $(this).css({
+                    "background-color": "#000000",
+                    "color": "#ffffff",
+                    "cursor": "pointer"
+                });
+            }, function() {
+                $(this).css({
+                    "background-color": "#FFFFFF",
+                    "color": "#000000"
+                });
+            }).on("click", this, function() {
+                $(this).parents("#khstooltip").remove();
+            });
         };
-
+        
         // add mouse events
         el.mouseenter(function (e) {
 
@@ -404,7 +425,6 @@
             }).mouseleave(function (e) {
 
                 if (current !== null) {
-                    current.children('div#khstooltip').remove();
                     current.attr("title", savedTitle);
                     current.css("outline", "");
                     current = null;
@@ -415,20 +435,20 @@
             });
     }
     
-    function local(message) { 	
-    	var str = localStorage["local.logs"];
-    	var log = null;
-    	if (str == null || str == undefined || str == "") {
-    		 log = {entries:[]};
-    	} else {
-    		log = JSON.parse(str);	
-    	}
-    	
-    	log.entries.push(message);
-    	if (log.entries.length > $.Log.logLength) {
-    		log.entries.shift();
-    	}
-    	localStorage["local.logs"] = JSON.stringify(log);  
+    function local(message) {   
+        var str = localStorage["local.logs"];
+        var log = null;
+        if (str == null || str == undefined || str == "") {
+             log = {entries:[]};
+        } else {
+            log = JSON.parse(str);  
+        }
+        
+        log.entries.push(message);
+        if (log.entries.length > $.Log.logLength) {
+            log.entries.shift();
+        }
+        localStorage["local.logs"] = JSON.stringify(log);  
  
     }
 
@@ -465,10 +485,10 @@
         window.onkeypress = function (e) {
             if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {
                 if (e.ctrlKey) {
-                	$.Log.showOutline();
+                    $.Log.showOutline();
                     if ($.Log.isInspecting()) {                   
                         $.Log.inspectOff();
-                    	$.Log.debug("inspecting off");
+                        $.Log.debug("inspecting off");
                     } else {
                         $.Log.inspectOn();
                         $.Log.debug("inspecting on");
@@ -480,10 +500,10 @@
         };    
                     
         window.onkeyup = function(e) {
-			if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {			
-				$.Log.hideOutline();						
-			}
-		};
+            if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {          
+                $.Log.hideOutline();                        
+            }
+        };
         
         // add style
         addStyle();
