@@ -482,7 +482,7 @@
 
     function enableInspector() {
         // toggle inspector with keystroke event
-        window.onkeypress = function (e) {
+        window.onkeydown = function (e) {
             if ($.Log.keyCodes.indexOf(e.keyCode) != -1) {
                 if (e.ctrlKey) {
                     $.Log.showOutline();
