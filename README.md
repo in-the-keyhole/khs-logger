@@ -50,6 +50,8 @@ Set log level (valid levels log,info,debug,warn,error)
  
      $.Log.level = $.LogLevel.debug;    
  
+Logging to remote API
+---------------------
 Define remote logging URL to POST logs to server side endpoint
  
      $.Log.remoteUrl = "sherpa/log;  //restful url POSTS log message string
@@ -68,14 +70,14 @@ Capture all JavaScript errors and log to remote end point
 		$.Log.error(message+"line:"+linenumber+"url:"+url);
 	 }
 
-Prefix logging output 
+Prefix log output
+-----------------
+Prefix logging output with user and application name 
 
-    $.Log.prefix = "DPITT:TIMESHEET"; // prefix all logging statements with current user and application
+    $.Log.prefix = "DPITT:TIMESHEET"; 
     
-    $.Log.prefix = function() { var position = navigator.geolocation.getCurrentPosition();   
-                               return position.coords.lattitude+position.coords.longitute }; // prefix log statements with browser location
+Prefix logging output with browser GEO location data
 
-Prefix log expressions with Geo location properties
 	        var longitude;
 	        var lattitude;
 			var showPosition = function(position) { 
@@ -83,6 +85,7 @@ Prefix log expressions with Geo location properties
 			    lattitude = position.coords.longitude;
 			};
 			navigator.geolocation.watchPosition(showPosition);
+
 			$.Log.prefix = function() { 
                        return longitude + ":"+ lattitude; }; // prefix log statements with browser location
 
