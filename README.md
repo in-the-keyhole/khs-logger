@@ -9,7 +9,7 @@ Visual Backbone.js View/Template inspector. Inspect and outline Backbone.js View
 Getting Started
 ---------------
 
-Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.5.zip] unzip in JavaScript folder
+Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.6.zip] unzip in JavaScript folder
 
 Load using script tags, jQuery is the only required dependency
 
@@ -39,34 +39,55 @@ Formatted log messages to your applications using log levels...
 
      // Log expressions 
      $.Log.info("Log an info message");
-         
-     // debug 
+     
      $.Log.debug("Log a debug message");
+            
+     $.Log.warn("Log a warn message");
+     
+     $.Log.error("Log an error message");
           
 Set log level (valid levels log,info,debug,warn,error)
  
      $.Log.level = $.LogLevel.debug;    
  
-Define remote logging URL
+Define remote logging URL to POST logs to server side endpoint
  
-     $.Log.remoteUrl = "sherpa/log;  //restful url from origin <origin>/sherpa/log{message}
+     $.Log.remoteUrl = "sherpa/log;  //restful url POSTS log message string
       
 Set remote logging level
 
-     $.Log.remoteLevel = $.LogLevel.error;
+     $.Log.remoteLevel = $.LogLevel.error; // errors will be posted to remoteUrl
      
 Before send call back function, so you can manipulate request headers
 
      $.Log.beforeSend = function(xhr,opts) { // to stuff, ie. add security token is necessary};     
      
-Capture all errors and log to remote end point                   
+Capture all JavaScript errors and log to remote end point                   
   
      window.onerror = function(message, url, linenumber) {
 		$.Log.error(message+"line:"+linenumber+"url:"+url);
 	 }
 
+Prefix logging output 
 
-View Inspector
+    $.Log.prefix = "DPITT:TIMESHEET"; // prefix all logging statements with current user and application
+    
+    $.Log.prefix = function() { var position = navigator.geolocation.getCurrentPosition();   
+                               return position.coords.lattitude+position.coords.longitute }; // prefix log statements with browser location
+
+Prefix log expressions with Geo location properties
+	        var longitude;
+	        var lattitude;
+			var showPosition = function(position) { 
+			    longitude = position.coords.latitude;
+			    lattitude = position.coords.longitude;
+			};
+			navigator.geolocation.watchPosition(showPosition);
+			$.Log.prefix = function() { 
+                       return longitude + ":"+ lattitude; }; // prefix log statements with browser location
+
+
+DIV Inspector
 --------------
 Inspect divs - really helpful with Backbone.js Views and HTML templates, as it visually shows View/Template boundaries. Here's how to apply:
 
@@ -76,11 +97,11 @@ View inspector has been enabled at this site [http://cgrok.com], give it a try..
 ![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/screen.png)
 
 
-Turn inspector on
+Turn inspector on, do this during startup
 
      $.Log.inspect(); // active outliner with CTRL-ENTER, open inspector with DBL CLICK
 
-Mark and display a DIV on mouseover... 
+Mark and display a DIV on mouseover...apply to controllers or view regions of your UI. 
 
      $.Log.mark(<div>,<message>,<optional JSON object>);
      
@@ -90,9 +111,16 @@ Example applied to Backbone.js View with $.Log.mark(...)
      render : function(eventName) {
 			var compiled_template = _.template(Template);
 			this.$el.html(compiled_template(this.model.toJSON()));
-                        $.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
+			// Mark this DIV
+            $.Log.mark(this.$el,"navBarCatRefView.js -> navbar-cateory-reference.html",this.model.toJSON());	
 			return this;
 	 }, ..
+
+Model Dumper
+------------
+Models for all marked DIVS can be displayed in a separate TAB or Window by toggling the inspector with CTRL-ENTER, then CTRL-M will open a
+new tab and display JSON models for a view. They appear in an editable text area so you grab the JSON if you want. 
+
 
 Custom Inspectors
 -----------------

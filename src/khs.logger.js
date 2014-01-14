@@ -1,4 +1,4 @@
-//     khs.logger.js 0.0.5
+//     khs.logger.js 0.0.6
 
 //     (c) 2013 David Pitt, Keyhole Software LLC. www.keyholesoftware.com
 //     Backbone may be freely distributed under the MIT license.
@@ -63,6 +63,8 @@
         logKeyCode: 17,  // default is L
         
         level:$.LogLevel.info, // default
+        
+        modelDumpKeyCode:  77, // default is m 
         
         divs : {},
         
@@ -182,14 +184,22 @@
             var clipboard = "<a href=javascript:copyToClipboard('" + json + "');>clipboard</a>";
             var options = "<div><button style='height: 12px;width: 100px' >Copy Json</button></div>";
             var info = "<div><b>Id:&nbsp;</b>" + $el.attr("id") + "</br><b>View:&nbsp;</b>" + title + "</div>";
+             var formattedJson;
             if (json !== null & json !== undefined) {
-                model += "<div style='max-height : 512px; overflow : auto;'><pre>" + formatJSON(json, "") + "</pre></div>";
+            	formattedJson = formatJSON(json,"");
+                model += "<div style='max-height : 512px; overflow : auto;'><pre>" + formattedJson + "</pre></div>";
                 info += model;
             }
             var key = $el.attr("id")+title;
             this.divs[key] = $el;         
             tooltip($el, info);
-            $.Log.debug("Marked "+title+" for inspection");
+            
+            // add data-json attribute
+            if (json ) {
+              $el.attr("data-json",title+"<~>"+formattedJson);
+            }
+            
+            $.Log.info("Marked "+title+" for inspection");
         },
  
         showOutline : function() {  
@@ -316,6 +326,14 @@
     };
 
     var formatLog = function (prefix, msg) {
+        if ($.Log.prefix) { 
+           if (typeof($.Log.prefix) == 'function' ) {	
+             prefix = prefix + ":"+ $.Log.prefix();
+           } else {
+        	 prefix = prefix + ":"+ $.Log.prefix;   
+           }
+           
+         }
         var now = new Date();
         var dt = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + ":" + pad(now.getHours(),2) + ":" + pad(now.getMinutes(),2) + ":" + pad(now.getSeconds(),2) + ":" + pad(now.getMilliseconds(),3);
         return prefix + ":" + dt + "->" + msg;
@@ -323,9 +341,12 @@
     
     var sendRemote = function (url, msg, beforeSend) {
         if (url !== null) {
-            var restful = url + "/" + encodeURI(msg.split('/').join(' '));
+            var restful = url;
             $.ajax({
                 url:restful,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ log: msg}),
                 beforeSend:beforeSend,
                 success:function (data) { },
                 error:function (data) {
@@ -496,6 +517,25 @@
                 }
             }
             
+            if (e.keyCode == $.Log.modelDumpKeyCode) {
+            	if (e.ctrlKey) {
+                 var json = $("[data-json]").map(function(){return $(this).attr("data-json");}).get();
+            	 var title = "";
+                 var info = "";
+                 for (var i = 0; i < json.length; i++) {
+                	 var value = json[i].split("<~>");
+                	 title = value[0];
+                	 model = value[1];
+                	 info = info + "<b>"+title+"</b></br><textarea rows='20' cols='80'>" + model +"</textarea></br>";
+                 }
+            
+             // open model window    
+             var w = window.open();            
+             w.document.write("<html><head><title>JSON MODELS</title></head><body><div class='khstipBody'>" + info + "</div><div class='khstipFooter'></div></body></html>");
+        
+           }
+            
+         }   
   
         };    
                     
