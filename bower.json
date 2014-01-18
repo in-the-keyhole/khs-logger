@@ -1,0 +1,28 @@
+{
+  "name": "khs-logger",
+  "version": "0.0.5",
+  "homepage": "https://github.com/in-the-keyhole/khs-logger",
+  "description": "Javascript logging framework and visual tool to help identify Backbone.js Views and Templates",
+  "main": ["src/khs.logger.js", "lib/khs.logger.min.js"],
+  "keywords": [
+    "logging",
+    "levels",
+    "backbone",
+    "templates"
+  ],
+  "authors": [
+    "David Pitt <dpitt@keyholesoftware.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "**/.png"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7.2"
+  }
+}
