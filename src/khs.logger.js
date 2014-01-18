@@ -186,7 +186,7 @@
             var info = "<div><b>Id:&nbsp;</b>" + $el.attr("id") + "</br><b>View:&nbsp;</b>" + title + "</div>";
              var formattedJson;
             if (json !== null & json !== undefined) {
-            	formattedJson = formatJSON(json,"");
+                formattedJson = formatJSON(json,"");
                 model += "<div style='max-height : 512px; overflow : auto;'><pre>" + formattedJson + "</pre></div>";
                 info += model;
             }
@@ -330,7 +330,7 @@
            if (typeof($.Log.prefix) == 'function' ) {	
              prefix = prefix + ":"+ $.Log.prefix();
            } else {
-        	 prefix = prefix + ":"+ $.Log.prefix;   
+             prefix = prefix + ":"+ $.Log.prefix;   
            }
            
          }
@@ -356,8 +356,8 @@
         }
     };
 
-    function pad(number,pad){
-        return(1e15+number+"").slice(-pad)}
+    function pad(number,padValue){
+        return(1e15+number+"").slice(-padValue);}
     
     function tooltip(el, tip) {
 
@@ -459,7 +459,7 @@
     function local(message) {   
         var str = localStorage["local.logs"];
         var log = null;
-        if (str == null || str == undefined || str == "") {
+        if (str === null || str === undefined || str === "") {
              log = {entries:[]};
         } else {
             log = JSON.parse(str);  
@@ -518,15 +518,15 @@
             }
             
             if (e.keyCode == $.Log.modelDumpKeyCode) {
-            	if (e.ctrlKey) {
+                if (e.ctrlKey) {
                  var json = $("[data-json]").map(function(){return $(this).attr("data-json");}).get();
-            	 var title = "";
+                 var title = "";
                  var info = "";
                  for (var i = 0; i < json.length; i++) {
-                	 var value = json[i].split("<~>");
-                	 title = value[0];
-                	 model = value[1];
-                	 info = info + "<b>"+title+"</b></br><textarea rows='20' cols='80'>" + model +"</textarea></br>";
+                     var value = json[i].split("<~>");
+                     title = value[0];
+                     model = value[1];
+                     info = info + "<b>"+title+"</b></br><textarea rows='20' cols='80'>" + model +"</textarea></br>";
                  }
             
              // open model window    
