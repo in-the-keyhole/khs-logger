@@ -66,6 +66,8 @@
         
         modelDumpKeyCode:  77, // default is m 
         
+        pullSettingsKeyCode: 80, // key to pull log settings from server, default is P
+        
         divs : {},
         
         inspectors: [],
@@ -78,7 +80,9 @@
 
         color:"#FF0000", // red
 
-        remoteUrl:null, // remote url,
+        remoteUrl:null, // remote url
+        
+        pullSettingsUrl: null, // pull log settings from an endpoint
 
         beforeSend:null, // call back function allows request object modification
 
@@ -355,6 +359,53 @@
             });
         }
     };
+    
+     var pullRemote = function (url,beforeSend) {
+        if (url !== null) {
+            var restful = url;
+            $.ajax({
+                url:restful,
+                type: 'GET',
+                contentType: 'application/json',
+                beforeSend:beforeSend,
+                success:function (data) 
+                { applySettings(data);
+                  console.log("Logging settins pulled and applied from server");
+                },
+                error:function (data) {
+                    console.error("Error sending remote log message to - " + restful);
+                }
+            });
+        }
+    };
+
+    function applySettings(properties) {
+                             
+        if (!properties) {return;}
+
+        if (properties.Loglevel) {
+            console.log("From remote url, setting LogLevel = "+properties.LogLevel);
+            $.Log.LogLevel = properties.LogLevel;
+         }
+         
+         if (properties.remoteUrl) {
+            console.log("From remote url, setting remoteUrl = "+properties.remoteUrl);
+            $.Log.remoteUrl = properties.remoteUrl;
+         }
+         
+         if (properties.prefix)  {
+             console.log("From remote url, setting prefix = "+properties.prefix);
+             $.Log.prefix = properties.prefix; 
+         }
+         
+         if (properties.remoteLevel)  {
+             console.log("From remote url, remoteUrl = "+properties.remoteLevel);
+             $.Log.remoteLevel = properties.remoteLevel; 
+         }
+        
+    
+    }
+
 
     function pad(number,padValue){
         return(1e15+number+"").slice(-padValue);}
@@ -527,15 +578,27 @@
                      title = value[0];
                      model = value[1];
                      info = info + "<b>"+title+"</b></br><textarea rows='20' cols='80'>" + model +"</textarea></br>";
-                 }
-            
+             }
+                                      
              // open model window    
              var w = window.open();            
              w.document.write("<html><head><title>JSON MODELS</title></head><body><div class='khstipBody'>" + info + "</div><div class='khstipFooter'></div></body></html>");
         
            }
+              
+          }   
             
-         }   
+          if (e.keyCode == $.Log.pullSettingsKeyCode ) {
+                if (e.ctrlKey) { 
+                  if ($.Log.pullSettingsUrl !== null) {
+                    pullRemote($.Log.pullSettingsUrl,$.Log.beforeSend);
+                  } else {
+                    console.log("Log settings pull url not set, set $.Log.pullSettingsUrl to a URL");	
+                 }
+                }
+                
+             }
+          
   
         };    
                     

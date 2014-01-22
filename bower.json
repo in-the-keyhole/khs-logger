@@ -1,6 +1,6 @@
 {
   "name": "khs-logger",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/in-the-keyhole/khs-logger",
   "description": "Javascript logging framework and visual tool to help identify Backbone.js Views and Templates",
   "main": ["src/khs.logger.js", "lib/khs.logger.min.js"],

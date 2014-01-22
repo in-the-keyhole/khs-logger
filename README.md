@@ -69,6 +69,10 @@ Capture all JavaScript errors and log to remote end point
      window.onerror = function(message, url, linenumber) {
 		$.Log.error(message+"line:"+linenumber+"url:"+url);
 	 }
+	 
+Pulling Log Settings from a server
+----------------------------------
+
 
 Prefix log output
 -----------------
