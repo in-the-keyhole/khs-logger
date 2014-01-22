@@ -9,8 +9,10 @@ Visual Backbone.js View/Template inspector. Inspect and outline Backbone.js View
 Getting Started
 ---------------
 
-Download latest release here [https://github.com/in-the-keyhole/khs-logger/archive/0.0.6.zip] unzip in JavaScript folder
+Download latest minified version here [https://github.com/in-the-keyhole/khs-logger/blob/master/lib/khs.logger.min.js] an in your JavaScript lib folder
 
+Or, install using Bower with the package name khs-logger
+	
 Load using script tags, jQuery is the only required dependency
 
      <script>lib/khs-logger.js</script>
@@ -72,8 +74,23 @@ Capture all JavaScript errors and log to remote end point
 	 
 Pulling Log Settings from a server
 ----------------------------------
+Client log settings can be changed remotely with a restful API that returns the following JSON payload.
 
+	// JSON that sets log levels
+	{ logLevel: 2, remoteLogLevel: 2, prefix: 'hello world', remoteUrl: }
+	
+Client application points to this API with the following settings in JavaScript 
 
+	$.Log.pullSettingsUrl = 'api/log/pullsettings';
+	
+Server API is accessed and settings pulled from client with the following key strokes
+
+	CTRL-P   Pulls server side log settings 
+	
+Pull key value can be changes with the following expression 
+
+	$.Log.pullSettingsKeyCode = 79;   // change pull key to CTRL-O	
+	
 Prefix log output
 -----------------
 Prefix logging output with user and application name 
