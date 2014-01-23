@@ -9,7 +9,7 @@ Visual Backbone.js View/Template inspector. Inspect and outline Backbone.js View
 Getting Started
 ---------------
 
-Download latest minified version here [https://github.com/in-the-keyhole/khs-logger/blob/master/lib/khs.logger.min.js] an in your JavaScript lib folder
+Download latest minified version here [https://github.com/in-the-keyhole/khs-logger/blob/master/lib/khs.logger.min.js]
 
 Or, install using Bower with the package name khs-logger
 	
