@@ -37,7 +37,7 @@ Or as require.js AMD module
 
 Logging
 -------
-Formatted log messages to your applications using log levels... 
+Here's how to apply formatted log messages in your application... 
 
      // Log expressions 
      $.Log.info("Log an info message");
@@ -51,6 +51,10 @@ Formatted log messages to your applications using log levels...
 Set log level (valid levels log,info,debug,warn,error)
  
      $.Log.level = $.LogLevel.debug;    
+     
+Here's an example output screen shot...
+
+![My image](https://raw.github.com/in-the-keyhole/khs-logger/master/log.png)
  
 Logging to remote API
 ---------------------
