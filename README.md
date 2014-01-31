@@ -186,3 +186,7 @@ Screen shot of localStorageLog inspector
 
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/in-the-keyhole/khs-logger/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
